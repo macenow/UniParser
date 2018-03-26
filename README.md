@@ -31,11 +31,12 @@ p.generator(template_tag=['{{}}'],
             indent=4)
 
 # run parser engine
-# source code can be read from a source file (in here is "sample.txt") or a string
-# message_only is for Json API, if True then only a dict message wil be returned, for
-# indicating engine's running status
+# source code can be read from a source file (in here is "sample.txt") or a string.
 #
-# "debug" can be set to "1" (not boolean) for displaying grammar matching process
+# "message_only" is for Json API, if True then only a dict message wil be returned, for
+# indicating engine's running status.
+#
+# "debug" can be set to "1" (not boolean) for displaying grammar matching process.
 ast = p.parse(source_file='sample.txt',
             source_code="""""",
             message_only=False,
