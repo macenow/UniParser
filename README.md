@@ -28,7 +28,8 @@ p.generator(template_tag=['{{}}'],
 
 # run parser engine
 # source code can be read from a source file (in here is "sample.txt") or a string
-# message_only is for Json API, if True then only a dict message wil be returned
+# message_only is for Json API, if True then only a dict message wil be returned, for
+# indicating engine running's status
 r = p.parse(source_file='sample.txt', source_code="""""",
             message_only=False, debug=0)
 
