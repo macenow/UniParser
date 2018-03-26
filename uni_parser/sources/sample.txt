@@ -1,0 +1,218 @@
+{{let ShowC=False}}
+{{let ShowP=False}}
+{{let ShowJ=False}}
+{{let Company=False}}
+{{let Trust=False}}
+{{let Superfund=False}}
+{{if str($client.valueOf('addressed_to')) in ['Client']}}
+    {{let ShowC=True}}
+{{end}}
+{{if $partner}}
+    {{if str($client.valueOf('addressed_to')) in ['Partner']}}
+        {{let ShowP=True}}
+    {{end}}
+    {{if str($client.valueOf('addressed_to')) in ['Joint']}}
+        {{let ShowJ=True}}
+        {{let Cname=str($client.preferred_name)}}
+        {{let Pname=str($partner.preferred_name)}}
+    {{end}}
+{{end}}
+{{if filter(lambda x: x in ['Company'], map(str,$client.valueOf('include_other_entities'))) }}
+    {{let Company=True}}
+{{end}}
+{{if filter(lambda x: x in ['Trust'], map(str,$client.valueOf('include_other_entities'))) }}
+    {{let Trust=True}}
+{{end}}
+{{if filter(lambda x: x in ['Superfund'], map(str,$client.valueOf('include_other_entities'))) }}
+    {{let Superfund=True}}
+{{end}}
+
+{{let advisor_t = $client.client_adviser.preferred_phone}}
+{{let advisor_e = $client.client_adviser.preferred_email}}
+
+{{for name in [company.name for company in $company]}}
+    {{if 1}}{{let company_name = name}}
+    {{end}}
+{{end}}
+{{for name in [superfund.name for superfund in $superfund]}}
+    {{if 1}}{{let smsf_name = name}}
+    {{end}}
+{{end}}
+{{for name in [trust.name for trust in $trust]}}
+    {{if 1}}{{let trust_name = name}}
+    {{end}}
+{{end}}
+
+{{let sorted_client = []}}
+{{let sorted_partner = []}}
+{{let sorted_joint = []}}
+{{let sorted_trust = []}}
+{{let sorted_company = []}}
+{{let sorted_smsf = []}}
+{{for item in $client.nb_soa_product_recommendations}}
+    {{if str(item.entity) == 'Client'}}
+        {{=sorted_client.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Partner'}}
+        {{=sorted_partner.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Joint'}}
+        {{=sorted_joint.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Trust'}}
+        {{=sorted_trust.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Company'}}
+        {{=sorted_company.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Superfund'}}
+        {{=sorted_smsf.append(item)}}
+    {{end}}
+{{end}}
+{{let sorted_soa_product_recommendations = sorted_client + sorted_partner + sorted_joint + sorted_trust + sorted_company + sorted_smsf}}
+
+{{let sorted_client = []}}
+{{let sorted_partner = []}}
+{{let sorted_joint = []}}
+{{let sorted_trust = []}}
+{{let sorted_company = []}}
+{{let sorted_smsf = []}}
+{{for item in $client.nb_soa_service_recommendations}}
+    {{if str(item.entity) == 'Client'}}
+        {{=sorted_client.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Partner'}}
+        {{=sorted_partner.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Joint'}}
+        {{=sorted_joint.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Trust'}}
+        {{=sorted_trust.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Company'}}
+        {{=sorted_company.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Superfund'}}
+        {{=sorted_smsf.append(item)}}
+    {{end}}
+{{end}}
+{{let sorted_soa_service_recommendations = sorted_client + sorted_partner + sorted_joint + sorted_trust + sorted_company + sorted_smsf}}
+
+{{let sorted_client = []}}
+{{let sorted_partner = []}}
+{{let sorted_joint = []}}
+{{let sorted_trust = []}}
+{{let sorted_company = []}}
+{{let sorted_smsf = []}}
+{{for item in $client.nb_soa_strategy_recommendations}}
+    {{if str(item.entity) == 'Client'}}
+        {{=sorted_client.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Partner'}}
+        {{=sorted_partner.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Joint'}}
+        {{=sorted_joint.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Trust'}}
+        {{=sorted_trust.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Company'}}
+        {{=sorted_company.append(item)}}
+    {{end}}
+    {{if str(item.entity) == 'Superfund'}}
+        {{=sorted_smsf.append(item)}}
+    {{end}}
+{{end}}
+{{let sorted_soa_strategy_recommendations = sorted_client + sorted_partner + sorted_joint + sorted_trust + sorted_company + sorted_smsf}}
+
+
+
+{{=$client.date_of_advice.format('%d %B %Y')}}
+
+{{if ShowC}}{{let title = str($client.title) + ' ' + str($client.preferred_name) + ' ' + str($client.last_name)}}
+    {{for item in $client.address.filter('preferred=True')}}
+        {{let suburb = str(item.suburb) + ' ' + str(item.state) + ' ' + str(item.postcode)}}
+    {{end}}
+    {{=title}}
+    {{=str(item.street)}}
+    {{=suburb}}
+{{end}}
+{{if ShowP}}{{let title = str($partner.title) + ' ' + str($partner.preferred_name) + ' ' + str($partner.last_name)}}
+    {{for item in $client.address.filter('preferred=True')}}
+        {{let suburb = str(item.suburb) + ' ' + str(item.state) + ' ' + str(item.postcode)}}
+    {{end}}
+    {{=title}}
+    {{=str(item.street)}}
+    {{=suburb}}
+{{end}}
+{{if ShowJ}}{{let title = str($client.title) + ' ' + str($client.preferred_name) + ' ' + str($client.last_name) + ' and ' + str($partner.title) + ' ' + str($partner.preferred_name) + ' ' + str($partner.last_name)}}
+    {{for item in $client.address.filter('preferred=True')}}
+        {{let suburb = str(item.suburb) + ' ' + str(item.state) + ' ' + str(item.postcode)}}
+    {{end}}
+    {{=title}}
+    {{=str(item.street)}}
+    {{=suburb}}
+{{end}}
+		{{let flag = True}}
+Perpetual Trustee
+Company Limited
+ABN 42 000 001 007
+
+AFSL 236643
+
+{{for item in $client.client_adviser.address}}
+    {{if item.preferred}}
+        {{if item.type == '0'}}{{let flag = False}}
+        {{end}}
+        {{for s in str(item.street).split(',')}}
+            {{=s.strip()}}
+        {{end}}
+        {{=str(item.suburb)}} {{=str(item.state)}} {{=str(item.postcode)}}
+    {{end}}
+{{end}}
+
+{{if flag}}
+    {{for item in $client.client_adviser.address}}
+        {{if item.type == '0'}}
+            {{for s in str(item.street).split(',')}}
+                {{=s.strip()}}
+            {{end}}
+            {{=item.suburb}} {{=item.state}} {{=item.postcode}}
+        {{end}}
+    {{end}}
+{{end}}
+
+Telephone: {{=advisor_t}}
+Facsimile: {{=$client.client_adviser.preferred_fax}}
+www.perpetual.com.au
+Dear
+{{if ShowC}}
+    {{=$client.preferred_name}}
+{{end}}
+{{if $partner}}
+    {{if ShowP}} and
+        {{=$partner.preferred_name}}
+    {{end}}
+{{end}}
+{{if ShowJ}}
+    {{=$client.preferred_name}} and
+    {{=$partner.preferred_name}}
+{{end}},
+
+Thank you for seeking our advice regarding your financial plan.
+Please find enclosed your plan (Statement of Advice), which outlines our strategic and investment recommendations to help achieve your financial goals. All the recommendations are based on your personal profile and objectives which are also outlined in the document. If your situation has changed, please let us know as soon as possible.
+Your personal financial plan includes detailed information on our recommendations and why they are appropriate to you. It also outlines the service we provide, any investment recommendations and associated fees and charges.
+NEXT STEPS
+Please read your Statement of Advice carefully. If you are happy with the recommendations and wish to implement your financial plan, please complete the 'Authority to proceed' letter which is found at the back of your plan. This formally instructs us to put the recommended strategies and investments in place.
+MORE INFORMATION
+We are committed to providing you with the highest quality service and support to ensure your needs are met. If you have any further questions, please contact me on {{=advisor_t}} or at {{=advisor_e}} your earliest convenience.
+We look forward to assisting you with your financial needs now and in the future.
+Yours sincerely
+
+
+
+{{=$client.client_adviser.first_name}} {{=$client.client_adviser.last_name}}
+{{=$client.client_adviser.jobtitle}}
+{{=advisor_t}}
