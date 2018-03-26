@@ -5,7 +5,7 @@ A universal parser engine
 #### How to Make a Quick Run
 **`loader.py`** is the "runner" script, in which you can customize the parser engine:
 - `template_tag`: if the target language is a template language, provide template tags in the format of list (e.g.: `['{{}}', '{%%}']`)
-- `var_define`: if the target language is a template language, provide the way of definining variable (e.g.: `var a = 1`)
+- `var_define`: if the target language is a template language, provide the keyword of definining variable (e.g.: `var` refers to `var a = 1` in code)
 - `end_tag`: if the target language is a template language, provide the end tag for statements in the format of list (e.g.: `['endfor', 'endif']`)
 - `return_ast`: whether the engine will return an AST instance
 - `save_ast`: whether the engine will save an human readable AST in a formatted string to a file with ".ast" extension
