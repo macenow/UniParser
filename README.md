@@ -1,0 +1,37 @@
+## UniParser
+
+A universal parser engine
+
+#### How to Make a Quick Run
+**`loader.py`** is the "runner" script, in which you can customize the parser engine:
+- `template_tag`: if the target language is a template language, provide template tags in the format of list (e.g.: `['{{}}', '{%%}']`)
+- `var_define`: if the target language is a template language, provide the way of definining variable (e.g.: `var a = 1`)
+- `end_tag`: if the target language is a template language, provide the end tag for statements in the format of list (e.g.: ['endfor', 'endif'])
+- `return_ast`: whether the engine will return an AST instance
+- `save_ast`: whether the engine will save an human readable AST in a formatted string to a file with ".ast" extension
+- `reserved_names`: customized reserved key word, the engine will not treat them as variable names
+- `overwrite`: whether overwrite the old parser engine file based or not. If True, the old parser file will be overwriten based on former configurations
+
+```python
+# create a ParserLoader instance, load grammar file called "demo.ebnf" in folder "grammars"
+p = ParserLoader('demo')
+
+# configure parser engine
+p.generator(template_tag=['{{}}'],
+            var_define='let',
+            end_tag=['end'],
+            return_ast=True,
+            save_ast=True,
+            reserved_names=[],
+            overwrite=True,
+            indent=4)
+
+# run parser engine
+# source code can be read from a source file (in here is "sample.txt") or a string
+# message_only is for Json API, if True then only a dict message wil be returned
+r = p.parse(source_file='sample.txt', source_code="""""",
+            message_only=False, debug=0)
+
+# print AST in a human readable format
+print(r)
+```
