@@ -12,6 +12,10 @@ A universal parser engine
 - `reserved_names`: customized reserved key word, the engine will not treat them as variable names
 - `overwrite`: whether overwrite the old parser engine file based or not. If True, the old parser file will be overwriten based on former configurations
 
+- folder `ast_results`: for storing saved AST files
+- folder `grammars`: for storing EBNF grammar files (e.g.: `python.ebnf`)
+- folder `sources`: for storing source code files, where the engine read code from
+
 ```python
 # create a ParserLoader instance, load grammar file called "demo.ebnf" in folder "grammars"
 p = ParserLoader('demo')
