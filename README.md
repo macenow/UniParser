@@ -1,6 +1,6 @@
 ## UniParser
 
-A universal parser engine
+An universal EBNF Grammar-Based Parser Engine
 
 #### How to Make a Quick Run
 **`loader.py`** is the "runner" script, in which you can customize the parser engine:
