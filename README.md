@@ -30,8 +30,12 @@ p.generator(template_tag=['{{}}'],
 # source code can be read from a source file (in here is "sample.txt") or a string
 # message_only is for Json API, if True then only a dict message wil be returned, for
 # indicating engine's running status
-r = p.parse(source_file='sample.txt', source_code="""""",
-            message_only=False, debug=0)
+#
+# debug can be set to "1" (not boolean) for displaying grammar matching process
+r = p.parse(source_file='sample.txt',
+            source_code="""""",
+            message_only=False,
+            debug=0)
 
 # print AST in a human readable format
 print(r)
